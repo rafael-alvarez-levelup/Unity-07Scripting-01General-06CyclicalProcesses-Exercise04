@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour
 {
@@ -24,6 +22,4 @@ public class Player : MonoBehaviour
             _myRigidBody.AddForce(new Vector3(horizontal, 0, vertical) * _speed);
         }
     }
-
-
 }

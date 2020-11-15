@@ -1,34 +1,58 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    private bool _isOpen;
+    #region Private Fields
 
-    private Switcher _switcher;
+    [SerializeField] private Switcher switcher;
 
-    private void Awake()
+    [SerializeField]
+    [Tooltip("Time to open the door.")]
+    private float time;
+
+    #endregion
+
+    #region Unity Methods
+
+    private void OnEnable()
     {
-        _switcher = FindObjectOfType<Switcher>();
+        switcher.OnSwitcherActivated += Switcher_OnSwitcherActivated;
     }
 
-    void Start()
+    private void OnDisable()
     {
-        _isOpen = false;
+        switcher.OnSwitcherActivated -= Switcher_OnSwitcherActivated;
     }
 
-    void Update()
+    #endregion
+
+    #region Private Methods
+
+    private void Switcher_OnSwitcherActivated()
     {
-        if (_switcher.IsSwitched && !_isOpen)
+        switcher.OnSwitcherActivated -= Switcher_OnSwitcherActivated;
+
+        StartCoroutine(OpenDoorRoutine());
+    }
+
+    private IEnumerator OpenDoorRoutine()
+    {
+        Vector3 originalPosition = transform.position;
+        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+
+        float timeStep = 0f;
+
+        while (time > timeStep)
         {
-            OpenDoor();
+            timeStep += Time.deltaTime;
+            float step = timeStep / time;
 
-            _isOpen = true;
+            transform.position = Vector3.Lerp(originalPosition, newPosition, step);
+
+            yield return null;
         }
     }
 
-    private void OpenDoor()
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
-    }
-
+    #endregion
 }

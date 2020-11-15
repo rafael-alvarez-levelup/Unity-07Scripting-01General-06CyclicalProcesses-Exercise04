@@ -1,19 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
-    public bool IsEnter { get; private set; }
-
-    private void Start()
-    {
-        IsEnter = false;
-    }
+    public delegate void EndPointReachedEventHandler();
+    public event EndPointReachedEventHandler OnEndPointReached;
 
     private void OnTriggerEnter()
     {
-        IsEnter = true;
+        if (OnEndPointReached != null)
+        {
+            OnEndPointReached();
+        }
     }
-
 }
