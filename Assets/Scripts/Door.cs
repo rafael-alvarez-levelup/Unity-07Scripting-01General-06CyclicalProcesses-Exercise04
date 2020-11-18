@@ -17,29 +17,30 @@ public class Door : MonoBehaviour
 
     private void OnEnable()
     {
-        switcher.OnSwitcherActivated += Switcher_OnSwitcherActivated;
+        switcher.OnActivated += Switcher_OnActivated;
     }
 
     private void OnDisable()
     {
-        switcher.OnSwitcherActivated -= Switcher_OnSwitcherActivated;
+        switcher.OnActivated -= Switcher_OnActivated;
     }
 
     #endregion
 
     #region Private Methods
 
-    private void Switcher_OnSwitcherActivated()
+    private void Switcher_OnActivated()
     {
-        switcher.OnSwitcherActivated -= Switcher_OnSwitcherActivated;
+        switcher.OnActivated -= Switcher_OnActivated;
 
         StartCoroutine(OpenDoorRoutine());
     }
 
+    // TODO: DRY
     private IEnumerator OpenDoorRoutine()
     {
         Vector3 originalPosition = transform.position;
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
+        Vector3 newPosition = new Vector3(originalPosition.x, originalPosition.y + 2.5f, originalPosition.z);
 
         float timeStep = 0f;
 

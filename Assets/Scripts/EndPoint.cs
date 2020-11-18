@@ -3,13 +3,13 @@
 public class EndPoint : MonoBehaviour
 {
     public delegate void EndPointReachedEventHandler();
-    public event EndPointReachedEventHandler OnEndPointReached;
+    public event EndPointReachedEventHandler OnReached;
 
     private void OnTriggerEnter()
     {
-        if (OnEndPointReached != null)
+        if (OnReached != null)
         {
-            OnEndPointReached();
+            OnReached();
         }
     }
 }

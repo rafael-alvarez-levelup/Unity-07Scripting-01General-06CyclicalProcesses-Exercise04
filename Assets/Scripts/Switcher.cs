@@ -6,7 +6,7 @@ public class Switcher : MonoBehaviour
     #region Events
 
     public delegate void SwitcherActivatedEventHandler();
-    public event SwitcherActivatedEventHandler OnSwitcherActivated;
+    public event SwitcherActivatedEventHandler OnActivated;
 
     #endregion
 
@@ -31,10 +31,11 @@ public class Switcher : MonoBehaviour
 
     #region Private Methods
 
+    // TODO: DRY
     private IEnumerator HideSwitchRoutine()
     {
         Vector3 originalPosition = transform.position;
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y - 0.4f, transform.position.z);
+        Vector3 newPosition = new Vector3(originalPosition.x, originalPosition.y - 0.4f, originalPosition.z);
 
         float timeStep = 0f;
 
@@ -48,9 +49,9 @@ public class Switcher : MonoBehaviour
             yield return null;
         }
 
-        if (OnSwitcherActivated != null)
+        if (OnActivated != null)
         {
-            OnSwitcherActivated();
+            OnActivated();
         }
     }
 

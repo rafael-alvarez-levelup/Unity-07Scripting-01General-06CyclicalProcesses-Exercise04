@@ -7,17 +7,17 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        endPoint.OnEndPointReached += EndPoint_OnEndPointReached;
+        endPoint.OnReached += EndPoint_OnReached;
     }
 
     private void OnDisable()
     {
-        endPoint.OnEndPointReached -= EndPoint_OnEndPointReached;
+        endPoint.OnReached -= EndPoint_OnReached;
     }
 
-    private void EndPoint_OnEndPointReached()
+    private void EndPoint_OnReached()
     {
-        endPoint.OnEndPointReached -= EndPoint_OnEndPointReached;
+        endPoint.OnReached -= EndPoint_OnReached;
 
         GameOver();
     }
