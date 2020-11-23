@@ -31,24 +31,18 @@ public class Switcher : MonoBehaviour
 
     #region Private Methods
 
-    // TODO: DRY
     private IEnumerator HideSwitchRoutine()
     {
         Vector3 originalPosition = transform.position;
         Vector3 newPosition = new Vector3(originalPosition.x, originalPosition.y - 0.4f, originalPosition.z);
 
-        float timeStep = 0f;
+        yield return StartCoroutine(transform.LerpTransformationRoutine(originalPosition, newPosition, time));
 
-        while (time > timeStep)
-        {
-            timeStep += Time.deltaTime;
-            float step = timeStep / time;
+        SwitcherActivated();
+    }
 
-            transform.position = Vector3.Lerp(originalPosition, newPosition, step);
-
-            yield return null;
-        }
-
+    private void SwitcherActivated()
+    {
         if (OnActivated != null)
         {
             OnActivated();

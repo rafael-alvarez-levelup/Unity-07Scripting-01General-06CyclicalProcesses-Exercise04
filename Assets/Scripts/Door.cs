@@ -33,26 +33,15 @@ public class Door : MonoBehaviour
     {
         switcher.OnActivated -= Switcher_OnActivated;
 
-        StartCoroutine(OpenDoorRoutine());
+        OpenDoor();
     }
 
-    // TODO: DRY
-    private IEnumerator OpenDoorRoutine()
+    private void OpenDoor()
     {
         Vector3 originalPosition = transform.position;
         Vector3 newPosition = new Vector3(originalPosition.x, originalPosition.y + 2.5f, originalPosition.z);
 
-        float timeStep = 0f;
-
-        while (time > timeStep)
-        {
-            timeStep += Time.deltaTime;
-            float step = timeStep / time;
-
-            transform.position = Vector3.Lerp(originalPosition, newPosition, step);
-
-            yield return null;
-        }
+        StartCoroutine(transform.LerpTransformationRoutine(originalPosition, newPosition, time));
     }
 
     #endregion

@@ -7,6 +7,11 @@ public class EndPoint : MonoBehaviour
 
     private void OnTriggerEnter()
     {
+        EndPointReached();
+    }
+
+    private void EndPointReached()
+    {
         if (OnReached != null)
         {
             OnReached();
